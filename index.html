@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -240,6 +241,14 @@
 
             const adjustTurnaround = document.getElementById('adjustTurnaround').checked;
 
+            // Helper function to convert minutes to HH:MM format
+            function formatDelay(minutes) {
+                const hours = Math.floor(Math.abs(minutes) / 60);
+                const mins = Math.abs(minutes) % 60;
+                const sign = minutes < 0 ? '-' : '';
+                return `${sign}${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}`;
+            }
+
             // Calculate delays in minutes
             const arrivalDelay = Math.round((actualOn - scheduledOn) / (1000 * 60));
 
@@ -253,9 +262,9 @@
 
             const departureDelay = Math.round(actualTurnaround - scheduledTurnaround);
 
-            // Display results
-            document.getElementById('arrivalDelay').textContent = `${arrivalDelay} minutes`;
-            document.getElementById('departureDelay').textContent = `${departureDelay} minutes`;
+            // Display results in HH:MM format
+            document.getElementById('arrivalDelay').textContent = formatDelay(arrivalDelay);
+            document.getElementById('departureDelay').textContent = formatDelay(departureDelay);
         }
 
         // Set default values to midnight (00:00)
