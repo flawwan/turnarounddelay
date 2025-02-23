@@ -191,11 +191,11 @@
     <div class="results">
         <div class="result-box">
             <h3>Arrival Delay</h3>
-            <p id="arrivalDelay">-- minutes</p>
+            <p id="arrivalDelay">hour:minutes</p>
         </div>
         <div class="result-box">
             <h3>Departure Delay</h3>
-            <p id="departureDelay">-- minutes</p>
+            <p id="departureDelay">hour:minutes</p>
         </div>
     </div>
 
@@ -250,7 +250,7 @@
             }
 
             // Calculate delays in minutes
-            const arrivalDelay = Math.round((actualOn - scheduledOn) / (1000 * 60));
+            var arrivalDelay = Math.round((actualOn - scheduledOn) / (1000 * 60));
 
             // Calculate departure delay with adjustment logic
             let scheduledTurnaround = (scheduledOff - scheduledOn) / (1000 * 60);
@@ -260,7 +260,14 @@
                 scheduledTurnaround -= 5;
             }
 
-            const departureDelay = Math.round(actualTurnaround - scheduledTurnaround);
+            var departureDelay = Math.round(actualTurnaround - scheduledTurnaround);
+
+            if (arrivalDelay < 0) {
+                arrivalDelay = 0;
+            }
+            if (departureDelay < 0) {
+                departureDelay = 0;
+            }
 
             // Display results in HH:MM format
             document.getElementById('arrivalDelay').textContent = formatDelay(arrivalDelay);
